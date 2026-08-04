@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>RESCA MICHIS</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/theme.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+</head>
+<body>
+<div id="app">
+    <aside id="sidebar"></aside>
+    <main id="main">
+        <header id="topbar"></header>
+        <section id="workspace"></section>
+    </main>
+</div>
+
+<script src="src/vendor/qrcode.js"></script>
+
+<script src="src/core/Storage.js"></script>
+
+<script src="src/entities/Tutor.js"></script>
+<script src="src/entities/Michi.js"></script>
+
+<script src="src/repositories/TutorRepository.js"></script>
+<script src="src/repositories/MichiRepository.js"></script>
+
+<script src="src/services/EventService.js"></script>
+<script src="src/services/QRService.js"></script>
+<script src="src/services/TutorService.js"></script>
+<script src="src/services/MichiService.js"></script>
+<script src="src/services/BackupService.js"></script>
+
+<script src="src/views/SidebarView.js"></script>
+<script src="src/views/TopbarView.js"></script>
+<script src="src/views/DashboardView.js"></script>
+<script src="src/views/RegistroWizardView.js"></script>
+<script src="src/views/MichisListView.js"></script>
+<script src="src/views/BackupView.js"></script>
+
+<script src="src/core/Router.js"></script>
+<script src="src/core/App.js"></script>
+
+<script>
+    App.start();
+</script>
+</body>
+</html>

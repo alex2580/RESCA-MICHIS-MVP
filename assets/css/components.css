@@ -1,0 +1,190 @@
+/* --- Sidebar --- */
+.logo{
+  text-align:center;
+  margin-bottom:30px;
+}
+.logo .emoji{font-size:38px}
+.logo h2{font-size:20px;letter-spacing:1px;margin-top:6px}
+.logo span{font-size:12px;color:var(--text-muted);display:block}
+
+nav.menu button{
+  width:100%;
+  text-align:left;
+  padding:12px 14px;
+  margin-bottom:6px;
+  border-radius:var(--radius-sm);
+  background:transparent;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+nav.menu button:hover{background:rgba(255,255,255,.5)}
+nav.menu button.activo{background:var(--white);box-shadow:var(--shadow)}
+
+/* --- Topbar --- */
+#topbar h1{font-size:20px}
+#topbar p{font-size:12px;color:var(--text-muted)}
+
+/* --- Dashboard --- */
+.saludo{margin-bottom:6px}
+.frase{color:var(--text-muted);font-style:italic;margin-bottom:24px}
+
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:18px;
+  margin-bottom:30px;
+}
+.kpi{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.kpi .emoji{font-size:26px}
+.kpi h3{font-size:13px;color:var(--text-muted);margin:6px 0 4px;font-weight:600}
+.kpi h1{font-size:34px}
+
+.panel{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:24px;
+}
+.panel h2{margin-bottom:18px;font-size:18px}
+
+.actividad-item{
+  padding:10px 0;
+  border-bottom:1px solid #F0F0F0;
+  font-size:14px;
+}
+.actividad-item:last-child{border-bottom:none}
+.actividad-item .fecha{color:var(--text-muted);font-size:12px}
+
+/* --- Wizard --- */
+.wizard-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+}
+.wizard-paso{color:var(--text-muted);font-size:13px}
+.wizard-progreso{
+  height:6px;
+  background:#EEEEEE;
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:30px;
+}
+.wizard-progreso-fill{
+  height:100%;
+  background:var(--mint-dark);
+  transition:width .2s;
+}
+.wizard-acciones{
+  display:flex;
+  justify-content:space-between;
+  margin-top:24px;
+}
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.chip-group{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+  padding:10px 18px;
+  border-radius:999px;
+  background:var(--white);
+  border:1px solid #E5E5E5;
+  font-weight:600;
+  font-size:14px;
+}
+.chip.activo{background:var(--mint);border-color:var(--mint-dark)}
+
+.preview-card{
+  background:var(--cream);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.preview-card dl{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;font-size:14px}
+.preview-card dt{color:var(--text-muted);font-weight:600}
+
+/* --- Michis list --- */
+.buscador{margin-bottom:20px}
+.michis-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;
+}
+.michi-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:transform .1s;
+}
+.michi-card:hover{transform:translateY(-2px)}
+.michi-card .emoji-grande{font-size:32px}
+.michi-card h3{margin:8px 0 2px}
+.michi-card p{font-size:13px;color:var(--text-muted)}
+.badge{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  background:var(--lavender);
+  margin-top:8px;
+}
+
+/* --- Ficha / Chapita imprimible --- */
+.chapita{
+  max-width:380px;
+  margin:0 auto;
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:26px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  border:3px solid var(--mint);
+}
+.chapita .emoji-grande{font-size:48px}
+.chapita h1{font-size:24px;margin:8px 0 4px}
+.chapita .aviso{
+  background:var(--cream);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  font-size:13px;
+  text-align:left;
+  margin:16px 0;
+}
+.chapita canvas{margin:16px auto}
+.chapita .contacto{font-size:15px;font-weight:700;margin:4px 0}
+.chapita .zona{color:var(--text-muted);font-size:13px}
+
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.4);
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;
+}
+.modal{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:26px;
+  max-width:440px;
+  width:90%;
+  max-height:85vh;
+  overflow:auto;
+}
+.modal-cerrar{float:right;font-size:20px;color:var(--text-muted)}
+
+@media print{
+  #sidebar,#topbar,.no-imprimir{display:none !important}
+  #app{display:block}
+  #workspace{padding:0}
+}

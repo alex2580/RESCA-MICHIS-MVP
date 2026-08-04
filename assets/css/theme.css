@@ -1,0 +1,59 @@
+:root{
+  --mint:#A8D5BA;
+  --mint-dark:#7FBFA0;
+  --peach:#FFD9B3;
+  --lavender:#E0D4F7;
+  --cream:#FFF8F0;
+  --white:#FFFFFF;
+  --text:#3A3A3A;
+  --text-muted:#7A7A7A;
+  --danger:#F2A5A5;
+  --danger-dark:#D97A7A;
+  --shadow:0 4px 18px rgba(0,0,0,.08);
+  --radius:16px;
+  --radius-sm:10px;
+}
+
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:var(--cream);
+  color:var(--text);
+}
+
+.btn{
+  padding:12px 20px;
+  border-radius:var(--radius-sm);
+  background:var(--mint);
+  color:var(--text);
+  font-weight:600;
+  transition:transform .1s, background .2s;
+}
+.btn:hover{background:var(--mint-dark)}
+.btn:active{transform:scale(.98)}
+.btn-secundario{background:var(--white);border:1px solid #E5E5E5}
+.btn-secundario:hover{background:var(--lavender)}
+.btn-peligro{background:var(--danger)}
+.btn-peligro:hover{background:var(--danger-dark)}
+.btn-block{width:100%}
+
+input,select,textarea{
+  padding:10px 14px;
+  border:1px solid #E5E5E5;
+  border-radius:var(--radius-sm);
+  background:var(--white);
+  width:100%;
+}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid var(--mint);
+  border-color:transparent;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+.field{margin-bottom:16px}
