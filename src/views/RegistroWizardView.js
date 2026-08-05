@@ -220,7 +220,7 @@ const RegistroWizardView = {
 
         return `
             <div class="chapita">
-                <div class="emoji-grande">🐈</div>
+                <div class="emoji-grande">${Icons.gatoSiames(48)}</div>
                 <h1>${michi.nombre}</h1>
                 <p class="contacto">${tutor.nombre} ${tutor.apellido}</p>
                 <p class="zona">${tutor.localidad || ""}</p>

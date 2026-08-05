@@ -7,7 +7,7 @@ const SidebarView = {
 
         document.getElementById("sidebar").innerHTML = `
             <div class="logo">
-                <div class="emoji">🐈</div>
+                <div class="emoji">${Icons.gatoSiames(38)}</div>
                 <h2>RESCA</h2>
                 <span>MICHIS</span>
             </div>

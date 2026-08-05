@@ -32,7 +32,7 @@ const MichisListView = {
             const tutor = TutorRepository.findById(m.tutorId);
             return `
                 <div class="michi-card" data-id="${m.id}">
-                    <div class="emoji-grande">🐈</div>
+                    <div class="emoji-grande">${Icons.gatoSiames(32)}</div>
                     <h3>${m.nombre}</h3>
                     <p>${tutor ? tutor.nombre + " " + tutor.apellido : "Sin tutor"}</p>
                     <span class="badge">${this.ESTADO_EMOJI[m.estado] || ""} ${m.estado}</span>
@@ -57,7 +57,7 @@ const MichisListView = {
             <div class="modal">
                 <span class="modal-cerrar" id="btnCerrarModal">✕</span>
                 <div class="chapita">
-                    <div class="emoji-grande">🐈</div>
+                    <div class="emoji-grande">${Icons.gatoSiames(48)}</div>
                     <h1>${michi.nombre}</h1>
                     <p class="contacto">${tutor ? tutor.nombre + " " + tutor.apellido : ""}</p>
                     <p class="zona">${tutor ? tutor.localidad : ""}</p>

@@ -18,7 +18,7 @@ const DashboardView = {
             <p class="frase">"Cada chapita puede significar un reencuentro."</p>
 
             <div class="kpis">
-                <div class="kpi"><div class="emoji">🐈</div><h3>Michis</h3><h1>${michis.length}</h1></div>
+                <div class="kpi"><div class="emoji">${Icons.gatoSiames(26)}</div><h3>Michis</h3><h1>${michis.length}</h1></div>
                 <div class="kpi"><div class="emoji">👤</div><h3>Tutores</h3><h1>${tutores.length}</h1></div>
                 <div class="kpi"><div class="emoji">🎟</div><h3>QR generados</h3><h1>${michis.length}</h1></div>
                 <div class="kpi"><div class="emoji">📈</div><h3>Esta semana</h3><h1>${estaSemana}</h1></div>

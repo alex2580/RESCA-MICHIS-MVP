@@ -4,7 +4,7 @@ const LoginView = {
         overlay.className = "login-overlay";
         overlay.innerHTML = `
             <div class="login-card">
-                <div class="emoji">🐈</div>
+                <div class="emoji">${Icons.gatoSiames(40)}</div>
                 <h2>RESCA MICHIS</h2>
                 <p class="login-sub">Ingresá el PIN de administrador</p>
                 <div class="field">
