@@ -21,6 +21,12 @@ class MichiRepository {
         Storage.save(db);
     }
 
+    static eliminar(id) {
+        const db = Storage.load();
+        db.michis = db.michis.filter(m => m.id !== id);
+        Storage.save(db);
+    }
+
     static buscar(texto) {
         const t = texto.trim().toLowerCase();
         if (!t) return this.all();

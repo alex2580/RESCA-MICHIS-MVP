@@ -8,7 +8,7 @@ Este es el **MVP acotado**, distinto de la versión más completa (`resca-michis
 
 - **Sin hosting.** Todo corre en el navegador con `localStorage`. No hay backend, no hay base de datos remota.
 - **QR 100% offline.** El código QR contiene directamente el texto con nombre, teléfono/WhatsApp y zona del tutor — no un link a un servidor. Cualquier lector de QR lo muestra sin necesitar conexión.
-- **Un solo usuario (admin).** Ale carga los datos de tutores y michis y genera las chapitas. No hay login ni autogestión por parte de los dueños.
+- **Un solo usuario (admin).** Ale carga los datos de tutores y michis y genera las chapitas. No hay autogestión por parte de los dueños. Hay una pantalla de PIN (`src/core/Auth.js`) que bloquea el acceso — es un candado simple del lado del cliente, no autenticación real (no hay backend que lo valide), pensado para que alguien que agarre el dispositivo no vea de arranque los datos de contacto de los tutores.
 - **Solo gatos por ahora.** El modelo de datos se puede extender a otras mascotas más adelante si hace falta.
 - **Backup manual.** Como no hay servidor, hay una pantalla para exportar/restaurar un `.json` con todos los datos y no depender solo del navegador.
 

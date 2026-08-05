@@ -7,6 +7,11 @@ const App = {
             michis: MichisListView,
             backup: BackupView
         });
-        Router.iniciar();
+
+        if (Auth.estaDesbloqueado()) {
+            Router.iniciar();
+        } else {
+            LoginView.render(() => Router.iniciar());
+        }
     }
 };

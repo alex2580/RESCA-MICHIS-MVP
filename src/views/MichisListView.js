@@ -65,7 +65,7 @@ const MichisListView = {
                     <p style="font-size:12px;color:var(--text-muted)">Código: ${michi.codigo}</p>
                 </div>
                 <div class="wizard-acciones no-imprimir">
-                    <span></span>
+                    <button class="btn btn-peligro" id="btnBorrarModal">🗑 Borrar</button>
                     <button class="btn" id="btnImprimirModal">🖨 Imprimir</button>
                 </div>
             </div>
@@ -75,5 +75,11 @@ const MichisListView = {
         document.getElementById("btnCerrarModal").onclick = () => overlay.remove();
         overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
         document.getElementById("btnImprimirModal").onclick = () => window.print();
+        document.getElementById("btnBorrarModal").onclick = () => {
+            if (!confirm(`¿Borrar el registro de ${michi.nombre}? Esta acción no se puede deshacer.`)) return;
+            MichiRepository.eliminar(michi.id);
+            overlay.remove();
+            this.pintarGrid(document.getElementById("txtBuscar").value);
+        };
     }
 };

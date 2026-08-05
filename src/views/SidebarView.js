@@ -17,10 +17,12 @@ const SidebarView = {
                 ${item("michis", "🐾", "Michis")}
                 ${item("backup", "💾", "Backup")}
             </nav>
+            <button class="btn btn-secundario btn-block" id="btnBloquear" style="margin-top:auto">🔒 Bloquear</button>
         `;
 
         document.getElementById("sidebar").querySelectorAll("button[data-route]").forEach(btn => {
             btn.onclick = () => Router.navegar(btn.dataset.route);
         });
+        document.getElementById("btnBloquear").onclick = () => Auth.bloquear();
     }
 };

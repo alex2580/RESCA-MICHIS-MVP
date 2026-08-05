@@ -188,3 +188,24 @@ nav.menu button.activo{background:var(--white);box-shadow:var(--shadow)}
   #app{display:block}
   #workspace{padding:0}
 }
+
+/* --- Login --- */
+.login-overlay{
+  position:fixed;inset:0;
+  background:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  z-index:300;
+}
+.login-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:36px 30px;
+  max-width:320px;
+  width:90%;
+  text-align:center;
+}
+.login-card .emoji{font-size:40px}
+.login-card h2{margin:8px 0 4px;letter-spacing:1px}
+.login-sub{color:var(--text-muted);font-size:13px;margin-bottom:20px}
+.login-error{color:var(--danger-dark);font-size:13px;min-height:18px;margin-bottom:6px}
