@@ -189,6 +189,24 @@ nav.menu button.activo{background:var(--white);box-shadow:var(--shadow)}
   #workspace{padding:0}
 }
 
+/* --- Buscador de tutor existente (wizard) --- */
+.tutor-resultado{
+  background:var(--cream);
+  border:1px solid #E5E5E5;
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  margin-top:8px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  font-size:13px;
+  transition:background .15s;
+}
+.tutor-resultado:hover{background:var(--lavender)}
+.tutor-resultado span{color:var(--text-muted);font-size:12px;white-space:nowrap}
+
 /* --- Login --- */
 .login-overlay{
   position:fixed;inset:0;

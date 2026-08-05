@@ -4,12 +4,46 @@ const RegistroWizardView = {
     state: {
         paso: 1,
         tutor: {},
-        michi: {}
+        michi: {},
+        tutorExistente: false
     },
 
     reiniciar() {
-        this.state = { paso: 1, tutor: {}, michi: {} };
+        this.state = { paso: 1, tutor: {}, michi: {}, tutorExistente: false };
         localStorage.removeItem(this.DRAFT_KEY);
+    },
+
+    elegirTutorExistente(tutorId) {
+        const tutor = TutorRepository.findById(tutorId);
+        if (!tutor) return;
+        this.state.tutor = tutor;
+        this.state.tutorExistente = true;
+        this.state.michi = { estado: "Tiene tutor" };
+        this.state.paso = 2;
+        this.guardarBorrador();
+        this.pintar();
+    },
+
+    pintarResultadosTutor(texto) {
+        const cont = document.getElementById("resultadosTutor");
+        if (!cont) return;
+        const t = texto.trim();
+        if (t.length < 2) { cont.innerHTML = ""; return; }
+
+        const matches = TutorRepository.buscarPorApellido(t);
+        if (matches.length === 0) {
+            cont.innerHTML = `<p style="font-size:12px;color:var(--text-muted);margin-top:6px">Sin coincidencias — se va a crear un tutor nuevo.</p>`;
+            return;
+        }
+        cont.innerHTML = matches.map(tu => `
+            <div class="tutor-resultado" data-id="${tu.id}">
+                <strong>${tu.nombre} ${tu.apellido}</strong>
+                <span>${tu.celular}${tu.localidad ? " · " + tu.localidad : ""}</span>
+            </div>
+        `).join("");
+        cont.querySelectorAll(".tutor-resultado").forEach(el => {
+            el.onclick = () => this.elegirTutorExistente(el.dataset.id);
+        });
     },
 
     guardarBorrador() {
@@ -60,6 +94,13 @@ const RegistroWizardView = {
         const t = this.state.tutor;
         return `
             <h2 style="margin-bottom:18px">Datos del tutor</h2>
+
+            <div class="field">
+                <label>¿Ya cargaste a este tutor? Buscar por apellido</label>
+                <input id="txtBuscarTutor" placeholder="Escribí el apellido para reusar sus datos...">
+                <div id="resultadosTutor"></div>
+            </div>
+
             <div class="grid-2">
                 <div class="field"><label>Nombre *</label><input id="txtNombre" value="${t.nombre || ""}"></div>
                 <div class="field"><label>Apellido</label><input id="txtApellido" value="${t.apellido || ""}"></div>
@@ -77,6 +118,26 @@ const RegistroWizardView = {
     // ---------- PASO 2 ----------
     pasoMichi() {
         const m = this.state.michi;
+        const t = this.state.tutor;
+
+        if (this.state.tutorExistente) {
+            return `
+                <h2 style="margin-bottom:6px">Datos del michi</h2>
+                <p style="color:var(--text-muted);font-size:13px;margin-bottom:18px">
+                    🔁 Tutor: <strong>${t.nombre} ${t.apellido}</strong> (${t.celular}) — reusando sus datos
+                </p>
+                <div class="field"><label>Nombre *</label><input id="txtMichiNombre" value="${m.nombre || ""}"></div>
+                <div class="field">
+                    <label>Situación</label>
+                    <textarea id="txtObs" rows="3" placeholder="ej. Se perdió, toma medicación, es VIF+, VILeF+...">${m.observaciones || ""}</textarea>
+                </div>
+                <div class="wizard-acciones">
+                    <button class="btn btn-secundario" id="btnAtras2">← Atrás</button>
+                    <button class="btn" id="btnContinuar2">Continuar →</button>
+                </div>
+            `;
+        }
+
         const chip = (grupo, valor, actual, texto) =>
             `<button type="button" class="chip ${actual === valor ? "activo" : ""}" data-grupo="${grupo}" data-valor="${valor}">${texto}</button>`;
 
@@ -172,7 +233,8 @@ const RegistroWizardView = {
                 <p style="font-size:12px;color:var(--text-muted)">Código: ${michi.codigo}</p>
             </div>
             <div class="wizard-acciones no-imprimir">
-                <button class="btn btn-secundario" id="btnOtro">📝 Registrar otro</button>
+                <button class="btn btn-secundario" id="btnOtroTutor">🔁 Otro con este tutor</button>
+                <button class="btn btn-secundario" id="btnOtro">📝 Nuevo tutor</button>
                 <button class="btn" id="btnImprimir">🖨 Imprimir</button>
             </div>
         `;
@@ -188,11 +250,26 @@ const RegistroWizardView = {
         };
 
         if (s.paso === 1) {
-            bindInput("txtNombre", "nombre", s.tutor);
-            bindInput("txtApellido", "apellido", s.tutor);
-            bindInput("txtCelular", "celular", s.tutor);
-            bindInput("txtWhatsapp", "whatsapp", s.tutor);
-            bindInput("txtLocalidad", "localidad", s.tutor);
+            // Si venía de "Otro con este tutor" y volvió acá a editar a mano,
+            // dejar de tratarlo como tutor existente — si no, el michi podría
+            // quedar linkeado al tutor viejo con datos que ya no coinciden.
+            const desvincularSiEdita = (id, campo) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.oninput = () => {
+                    s.tutor[campo] = el.value;
+                    s.tutorExistente = false;
+                    delete s.tutor.id;
+                    this.guardarBorrador();
+                };
+            };
+            desvincularSiEdita("txtNombre", "nombre");
+            desvincularSiEdita("txtApellido", "apellido");
+            desvincularSiEdita("txtCelular", "celular");
+            desvincularSiEdita("txtWhatsapp", "whatsapp");
+            desvincularSiEdita("txtLocalidad", "localidad");
+
+            document.getElementById("txtBuscarTutor").oninput = (e) => this.pintarResultadosTutor(e.target.value);
 
             document.getElementById("btnContinuar1").onclick = () => {
                 if (!s.tutor.nombre || !s.tutor.celular) {
@@ -211,10 +288,13 @@ const RegistroWizardView = {
             bindInput("txtObs", "observaciones", s.michi);
             bindInput("txtMichiNombre", "nombre", s.michi);
 
-            document.getElementById("selEstado").onchange = (e) => {
-                s.michi.estado = e.target.value;
-                this.guardarBorrador();
-            };
+            const selEstado = document.getElementById("selEstado");
+            if (selEstado) {
+                selEstado.onchange = (e) => {
+                    s.michi.estado = e.target.value;
+                    this.guardarBorrador();
+                };
+            }
 
             document.querySelectorAll(".chip").forEach(chip => {
                 chip.onclick = () => {
@@ -244,7 +324,8 @@ const RegistroWizardView = {
             document.getElementById("btnAtras3").onclick = () => { s.paso = 2; this.pintar(); };
             document.getElementById("btnGenerar").onclick = () => {
                 try {
-                    const tutor = TutorService.create(s.tutor);
+                    // Si es un tutor ya existente (viene con id del repo), no crear uno nuevo.
+                    const tutor = (s.tutorExistente && s.tutor.id) ? s.tutor : TutorService.create(s.tutor);
                     const michi = MichiService.create(s.michi, tutor.id);
                     s.tutor = tutor;
                     s.michi = michi;
@@ -259,6 +340,12 @@ const RegistroWizardView = {
 
         if (s.paso === 4) {
             document.getElementById("btnImprimir").onclick = () => window.print();
+            document.getElementById("btnOtroTutor").onclick = () => {
+                const tutorActual = s.tutor;
+                this.state = { paso: 2, tutor: tutorActual, tutorExistente: true, michi: { estado: "Tiene tutor" } };
+                this.guardarBorrador();
+                this.pintar();
+            };
             document.getElementById("btnOtro").onclick = () => {
                 this.reiniciar();
                 this.pintar();

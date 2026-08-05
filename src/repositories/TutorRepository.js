@@ -20,4 +20,10 @@ class TutorRepository {
         db.tutores[i] = tutor;
         Storage.save(db);
     }
+
+    static buscarPorApellido(texto) {
+        const t = texto.trim().toLowerCase();
+        if (!t) return [];
+        return this.all().filter(tu => (tu.apellido || "").toLowerCase().includes(t));
+    }
 }
