@@ -5,6 +5,7 @@ const QRService = {
         const p = new URLSearchParams();
         p.set("n", michi.nombre || "");
         if (michi.sexo) p.set("s", michi.sexo);
+        if (michi.castrado) p.set("cs", michi.castrado);
         if (michi.edad) p.set("e", michi.edad);
         if (michi.color) p.set("c", michi.color);
         if (michi.estado) p.set("es", michi.estado);

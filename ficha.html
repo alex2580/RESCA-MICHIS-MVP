@@ -100,6 +100,7 @@
   const p = new URLSearchParams(location.search);
   const nombre = p.get("n") || "Michi";
   const sexo = p.get("s") || "";
+  const castrado = p.get("cs") || "";
   const edad = p.get("e") || "";
   const color = p.get("c") || "";
   const estado = p.get("es") || "";
@@ -136,6 +137,7 @@
     </div>
     <dl>
       ${fila("Sexo", sexo)}
+      ${fila("Castrado", castrado)}
       ${fila("Edad", edad)}
       ${fila("Color", color)}
       ${fila("Zona habitual", zona)}
