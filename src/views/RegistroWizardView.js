@@ -215,8 +215,8 @@ const RegistroWizardView = {
     // ---------- PASO 4 ----------
     pasoQR() {
         const { tutor, michi } = this.state;
-        const payload = QRService.construirPayload(michi, tutor);
-        const dataUrl = QRService.generarDataURL(payload, 6);
+        const url = QRService.construirURLFicha(michi, tutor);
+        const dataUrl = QRService.generarDataURL(url, 6);
 
         return `
             <div class="chapita">

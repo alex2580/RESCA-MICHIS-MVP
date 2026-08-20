@@ -48,8 +48,8 @@ const MichisListView = {
     abrirFicha(michiId) {
         const michi = MichiRepository.findById(michiId);
         const tutor = TutorRepository.findById(michi.tutorId);
-        const payload = QRService.construirPayload(michi, tutor);
-        const dataUrl = QRService.generarDataURL(payload, 6);
+        const url = QRService.construirURLFicha(michi, tutor);
+        const dataUrl = QRService.generarDataURL(url, 6);
 
         const overlay = document.createElement("div");
         overlay.className = "modal-overlay no-imprimir";

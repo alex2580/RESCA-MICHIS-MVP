@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Encontré un michi — RESCA MICHIS</title>
+<style>
+  :root{
+    --mint:#A8D5BA;
+    --mint-dark:#7FBFA0;
+    --peach:#FFD9B3;
+    --lavender:#E0D4F7;
+    --cream:#FFF8F0;
+    --white:#FFFFFF;
+    --text:#3A3A3A;
+    --text-muted:#7A7A7A;
+    --shadow:0 4px 18px rgba(0,0,0,.08);
+    --radius:16px;
+    --radius-sm:10px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    display:flex;
+    justify-content:center;
+    padding:24px 16px;
+  }
+  .card{
+    background:var(--white);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:420px;
+    width:100%;
+    padding:28px 24px;
+    text-align:center;
+  }
+  .emoji{font-size:56px}
+  h1{margin:8px 0 0;font-size:26px}
+  .badge{
+    display:inline-block;
+    background:var(--lavender);
+    color:var(--text);
+    border-radius:999px;
+    padding:4px 14px;
+    font-size:13px;
+    font-weight:600;
+    margin-top:8px;
+  }
+  .aviso{
+    background:var(--peach);
+    border-radius:var(--radius-sm);
+    padding:14px;
+    font-size:14px;
+    margin:20px 0;
+    text-align:left;
+    line-height:1.5;
+  }
+  dl{
+    text-align:left;
+    margin:20px 0;
+    border-top:1px solid #eee;
+    padding-top:12px;
+  }
+  dl div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee;font-size:14px}
+  dt{color:var(--text-muted)}
+  dd{margin:0;font-weight:600;text-align:right}
+  .contacto{
+    background:var(--mint);
+    border-radius:var(--radius-sm);
+    padding:16px;
+    margin-top:16px;
+  }
+  .contacto h2{margin:0 0 10px;font-size:15px}
+  .btns{display:flex;gap:10px;margin-top:10px}
+  .btn{
+    flex:1;
+    display:block;
+    padding:12px;
+    border-radius:var(--radius-sm);
+    background:var(--white);
+    color:var(--text);
+    font-weight:700;
+    text-decoration:none;
+    font-size:14px;
+  }
+  .vacio{color:var(--text-muted);font-size:14px;margin-top:24px}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="emoji">🐈</div>
+  <p class="vacio">Cargando datos…</p>
+</div>
+
+<script>
+(function () {
+  const p = new URLSearchParams(location.search);
+  const nombre = p.get("n") || "Michi";
+  const sexo = p.get("s") || "";
+  const edad = p.get("e") || "";
+  const color = p.get("c") || "";
+  const estado = p.get("es") || "";
+  const tutorNombre = p.get("tn") || "";
+  const celular = p.get("t") || "";
+  const whatsapp = p.get("w") || "";
+  const zona = p.get("z") || "";
+
+  const card = document.getElementById("card");
+
+  if (!celular && !whatsapp) {
+    card.innerHTML = `
+      <div class="emoji">🐈</div>
+      <h1>Ficha no encontrada</h1>
+      <p class="vacio">Este link no trae los datos del michi. Verificá el código QR o pedile a la persona que lo generó que lo revise.</p>
+    `;
+    return;
+  }
+
+  const fila = (label, valor) => valor
+    ? `<div><dt>${label}</dt><dd>${valor}</dd></div>`
+    : "";
+
+  const waNumero = (whatsapp || celular || "").replace(/[^\d+]/g, "");
+
+  card.innerHTML = `
+    <div class="emoji">🐈</div>
+    <h1>${nombre}</h1>
+    ${estado ? `<span class="badge">${estado}</span>` : ""}
+    <div class="aviso">
+      ✔ No lo persigas si está asustado.<br>
+      ✔ Comunicate con el tutor, no te lo lleves.<br>
+      ✔ Si está en peligro, ayudalo solo si podés hacerlo con seguridad.
+    </div>
+    <dl>
+      ${fila("Sexo", sexo)}
+      ${fila("Edad", edad)}
+      ${fila("Color", color)}
+      ${fila("Zona habitual", zona)}
+    </dl>
+    <div class="contacto">
+      <h2>${tutorNombre ? "Tutor: " + tutorNombre : "Contactá al tutor"}</h2>
+      <div class="btns">
+        ${celular ? `<a class="btn" href="tel:${celular.replace(/[^\d+]/g, "")}">📞 Llamar</a>` : ""}
+        ${waNumero ? `<a class="btn" href="https://wa.me/${waNumero}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ""}
+      </div>
+    </div>
+  `;
+})();
+</script>
+</body>
+</html>

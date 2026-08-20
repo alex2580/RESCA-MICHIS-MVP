@@ -1,15 +1,18 @@
 const QRService = {
-    construirPayload(michi, tutor) {
-        const lineas = [
-            `🐈 ${michi.nombre.toUpperCase()} busca a su familia`,
-            `RESCA MICHIS`,
-            ``,
-            `Tel: ${tutor.celular}`,
-        ];
-        if (tutor.whatsapp) lineas.push(`WhatsApp: ${tutor.whatsapp}`);
-        if (tutor.localidad) lineas.push(`Zona: ${tutor.localidad}`);
-        lineas.push(``, `No lo persigas si está asustado.`, `Por favor comunicate con el tutor. ❤️`);
-        return lineas.join("\n");
+    BASE_URL_FICHA: "https://alex2580.github.io/RESCA-MICHIS-MVP/ficha.html",
+
+    construirURLFicha(michi, tutor) {
+        const p = new URLSearchParams();
+        p.set("n", michi.nombre || "");
+        if (michi.sexo) p.set("s", michi.sexo);
+        if (michi.edad) p.set("e", michi.edad);
+        if (michi.color) p.set("c", michi.color);
+        if (michi.estado) p.set("es", michi.estado);
+        if (tutor.nombre || tutor.apellido) p.set("tn", `${tutor.nombre || ""} ${tutor.apellido || ""}`.trim());
+        if (tutor.celular) p.set("t", tutor.celular);
+        if (tutor.whatsapp) p.set("w", tutor.whatsapp);
+        if (tutor.localidad) p.set("z", tutor.localidad);
+        return `${this.BASE_URL_FICHA}?${p.toString()}`;
     },
 
     generarDataURL(texto, cellSize) {
