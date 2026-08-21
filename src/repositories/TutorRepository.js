@@ -21,6 +21,12 @@ class TutorRepository {
         Storage.save(db);
     }
 
+    static eliminar(id) {
+        const db = Storage.load();
+        db.tutores = db.tutores.filter(t => t.id !== id);
+        Storage.save(db);
+    }
+
     static buscarPorApellido(texto) {
         const t = texto.trim().toLowerCase();
         if (!t) return [];
